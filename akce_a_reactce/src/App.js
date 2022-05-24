@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import List from './list.js'; 
 
 function App() {
   let x="lizar";
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
      <h1>hello world</h1>
      <p>{x}</p>
+     <List />
     </div>
   );
 }

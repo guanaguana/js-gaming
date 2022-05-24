@@ -4,12 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import funkce from './bottom';
+import Header from './top';
+import Button from './button';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
     {funkce()}
+    <Header />
+    <Button />
   </React.StrictMode>
 );
 
