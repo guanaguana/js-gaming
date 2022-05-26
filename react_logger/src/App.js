@@ -10,8 +10,8 @@ function App() {
   const[tasks,setTask]=useState([])
 
   useEffect(()=>{
-   const getTasks=()=>{
-     const tasksFromServer= fetchTasks()
+   const getTasks=async()=>{
+     const tasksFromServer= await fetchTasks()
      setTask(tasksFromServer)
    }
     getTasks()
@@ -61,8 +61,6 @@ function App() {
       body: JSON.stringify(task),
     })
     const data=await res.json()
-    console.log(data)
-    console.log(tasks)
     setTask([...tasks,data])
   }
 
@@ -70,7 +68,7 @@ function App() {
     <div className="App">
       <Header onAdd={()=>setShow(!showAddTask)} napis={showAddTask} />
       { showAddTask && <AddTask onAdd={addTask} />}
-      {(tasks!==undefined&&tasks.length>0)?<Tasks tasks={tasks} onDelete={deleteTask} onDouble={toggleReminder} />:<p>Nic</p>}
+      {(tasks.length>0)?<Tasks tasks={tasks} onDelete={deleteTask} onDouble={toggleReminder} />:<p>Nic</p>}
     </div>
   );
 }

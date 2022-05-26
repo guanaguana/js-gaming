@@ -1,58 +1,10 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "text": "sample text",
-      "date": 7,
-      "reminder": true
-    },
-    {
-      "id": 2,
-      "text": "lorem ipsum",
-      "date": 2,
-      "reminder": false
-    },
-    {
       "text": "lizar",
       "date": "2022-05-21",
       "reminder": false,
-      "id": 3
-    },
-    {
-      "text": "lizar",
-      "date": "2022-05-28",
-      "reminder": false,
-      "id": 4
-    },
-    {
-      "text": "lizar",
-      "date": "2022-04-28",
-      "reminder": false,
-      "id": 5
-    },
-    {
-      "text": "asd",
-      "date": "2022-06-05",
-      "reminder": false,
-      "id": 6
-    },
-    {
-      "text": "lizar",
-      "date": "2022-05-20",
-      "reminder": false,
-      "id": 7
-    },
-    {
-      "text": "lizar",
-      "date": "2022-05-21",
-      "reminder": false,
-      "id": 8
-    },
-    {
-      "text": "lizar",
-      "date": "2022-05-21",
-      "reminder": false,
-      "id": 9
+      "id": 1
     }
   ]
 }
