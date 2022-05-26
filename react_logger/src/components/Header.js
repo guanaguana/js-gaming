@@ -1,3 +1,4 @@
+import React from "react"
 import Tlacitko from './Button.js';
 
 const Header=({onAdd,napis})=>{

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React,{ useState, useEffect } from "react"
 import './App.css';
 import Header from './components/Header';
 import Tasks from './components/Tasks'
@@ -7,25 +7,70 @@ import AddTask from "./components/AddTask";
 
 function App() {
   const [showAddTask,setShow]=useState(false)
-  const[tasks,setTask]=useState([{id:1,text:"sample text",date:7,reminder:true},{id:2,text:"lorem ipsum",date:2,reminder:false}])
-  const deleteTask=(id)=>{
-    setTask(tasks.filter((task)=>task.id !== id))
+  const[tasks,setTask]=useState([])
+
+  useEffect(()=>{
+   const getTasks=()=>{
+     const tasksFromServer= fetchTasks()
+     setTask(tasksFromServer)
+   }
+    getTasks()
+  },[])
+
+
+
+  const fetchTasks= async() =>{
+    const res= await fetch("http://localhost:5000/tasks")
+    const data=  res.json()
+    return data
   }
-  const toggleReminder=(id)=>{
-    setTask(tasks.map((task)=>task.id===id?{...task,reminder:!task.reminder}:task))
+
+  const fetchTask=async (id) =>{
+    const res=await fetch(`http://localhost:5000/tasks/${id}`)
+    const data=await res.json()
+    return data
   }
-  const addTask=(task)=>{
-    console.log(task)
-    const id= Math.floor(Math.random()*10000)+1
-    const newTask={id,...task}
-    setTask([...tasks,newTask])
+
+
+  const deleteTask=async (id)=>{
+     await fetch(`http://localhost:5000/tasks/${id}`,{
+       method:"DELETE",
+     })
+
+   setTask(tasks.filter((task)=>task.id !== id))
+  }
+  const toggleReminder=async(id)=>{
+    const taskToToggle=await fetchTask(id)
+    const updatedTask={...taskToToggle,reminder:!taskToToggle.reminder}
+    const res=await fetch(`http://localhost:5000/tasks/${id}`,{
+      method:"PUT",
+      headers:{
+        "Content-type":"application/json"
+      },
+      body:JSON.stringify(updatedTask)})
+      const data=await res.json()
+
+    setTask(tasks.map((task)=>task.id===id?{...task,reminder:data.reminder}:task))
+  }
+  const addTask=async(task)=>{
+    const res=await fetch("http://localhost:5000/tasks",{
+      method:"POST",
+      headers:{
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(task),
+    })
+    const data=await res.json()
+    console.log(data)
+    console.log(tasks)
+    setTask([...tasks,data])
   }
 
   return (
     <div className="App">
       <Header onAdd={()=>setShow(!showAddTask)} napis={showAddTask} />
       { showAddTask && <AddTask onAdd={addTask} />}
-      { (tasks.length>0)?<Tasks tasks={tasks} onDelete={deleteTask} onDouble={toggleReminder} />:<p>Nic</p> }
+      {(tasks!==undefined&&tasks.length>0)?<Tasks tasks={tasks} onDelete={deleteTask} onDouble={toggleReminder} />:<p>Nic</p>}
     </div>
   );
 }

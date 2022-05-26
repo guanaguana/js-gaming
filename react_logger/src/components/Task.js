@@ -1,3 +1,5 @@
+import React from "react"
+
 const Task=({task,onDelete,onDouble})=>{
     return(
         <div onDoubleClick={()=>onDouble(task.id)}>
