@@ -1,8 +1,11 @@
 import React,{ useState, useEffect } from "react"
+import { BrowserRouter,Route, Routes} from "react-router-dom";
 import './App.css';
 import Header from './components/Header';
 import Tasks from './components/Tasks'
 import AddTask from "./components/AddTask";
+import Footer from "./components/footer";
+import About from "./components/about";
 
 
 function App() {
@@ -65,11 +68,33 @@ function App() {
   }
 
   return (
+    <BrowserRouter>
     <div className="App">
       <Header onAdd={()=>setShow(!showAddTask)} napis={showAddTask} />
-      { showAddTask && <AddTask onAdd={addTask} />}
-      {(tasks.length>0)?<Tasks tasks={tasks} onDelete={deleteTask} onDouble={toggleReminder} />:<p>Nic</p>}
+      <Routes>
+      <Route
+            path='/'
+            element={
+              <>
+                {showAddTask && <AddTask onAdd={addTask} />}
+                {tasks.length > 0 ? (
+                  <Tasks
+                    tasks={tasks}
+                    onDelete={deleteTask}
+                    onDouble={toggleReminder}
+                  />
+                ) : (
+                  'Nic'
+                )}
+              </>
+            }
+          />
+          <Route path='/about' element={<About />} />
+
+      </Routes>
+      <Footer />
     </div>
+    </BrowserRouter>
   );
 }
 
